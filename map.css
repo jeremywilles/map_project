@@ -1,0 +1,22 @@
+
+body{
+	height: 100%;
+	margin: 0;
+}
+
+
+.listView{
+	width: 33%;
+	float: left;
+	background: green;
+	
+	height: 100vh;
+}
+
+.mapDiv{
+	width: 67%;
+	float: right;
+	background: blue;
+	
+	height: 100vh;
+}
