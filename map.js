@@ -10,3 +10,13 @@ function initMap() {
     zoom: 8
   });
 }
+
+//possible list library
+// http://www.listjs.com/
+
+//todo
+//markers
+
+//listview
+
+//
