@@ -13,10 +13,9 @@ body{
 	height: 100vh;
 }
 
-.mapDiv{
+#map{
 	width: 67%;
 	float: right;
-	background: blue;
 	
 	height: 100vh;
 }
