@@ -4,12 +4,15 @@ body{
 	margin: 0;
 }
 
+.searchBar{
+	width: 100%;
+	height: 30px;
+}
+
 
 .listView{
 	width: 33%;
-	float: left;
-	background: green;
-	
+	float: left;	
 	height: 100vh;
 }
 
@@ -18,4 +21,17 @@ body{
 	float: right;
 	
 	height: 100vh;
+}
+
+ul{
+	list-style: none;
+	padding: 0;
+}
+
+li{
+	font-size: 14;
+	margin-left: 0;
+	padding-top: 10px;
+
+
 }

@@ -5,19 +5,23 @@
 	<link rel="stylesheet" type="text/css" href="map.css">
 </head>
 <body>
-	<div class="searchBar">Header</div>
+	<input class="searchBar" placeholder="Search..." type="search" autocomplete="off">
 
 	<div class="container">
-		<div class="listView">List goes here</div>
+		<div class="listView">
+			<ul data-bind="foreach: locations">
+				<li data-bind="text: name"></li>
+			</ul>
+		</div>
 		<div id="map">map goes here</div>
 	</div>
 
-
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
 	<script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDR_R0fIJ8eCx9SlRLLY5LtPuh9yTF4Oqc&callback=initMap">
     </script>
 	<script type="text/javascript" src="map.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+	
 
 </body>
 </html>
