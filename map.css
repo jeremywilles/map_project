@@ -11,13 +11,13 @@ body{
 
 
 .listView{
-	width: 33%;
+	width: 20%;
 	float: left;	
 	height: 100vh;
 }
 
 #map{
-	width: 67%;
+	width: 80%;
 	float: right;
 	
 	height: 100vh;
