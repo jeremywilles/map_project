@@ -7,13 +7,11 @@
 
 //info windows with ajax
 
-
-//live search
-
-
 //mobile site
 
 var map;
+
+var gMarks = [];
 
 var markers = [
 	{name: "Animal Kingdom", lat: 28.3580, lng: -81.5900 },
@@ -22,77 +20,66 @@ var markers = [
 	{name: "Hollywood Studios", lat: 28.3570, lng: -81.5561},
 	{name: "Disney Springs", lat: 28.3710, lng: -81.5180}];
 
-
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 28.386292, lng: -81.554607},
     zoom: 13
   });
-
-  marks();
-
+  marks(markers);
   }
 
-function marks(){
-	console.log(markers.length);
+function marks(markers){
   for(var i = 0; i<markers.length; i++){
   	var loc = markers[i];
   	var latLng = {lat: loc.lat, lng: loc.lng};
-  	console.log(latLng);
   	var marker = new google.maps.Marker({
   		position: latLng,
   		map: map,
   		title: loc.name  		
   	});
+  	gMarks.push(marker);
 	}
+}
+
+function clearOverlays(markersArray) {
+	console.log(markersArray);
+  for (var i = 0; i < markersArray.length; i++ ) {
+    markersArray[i].setMap(null);
+  }
+  markersArray.length = 0;
 }
 
 
 
-//possible list library
-// http://www.listjs.com/
-
 //live search with knockout.js
 // http://opensoul.org/2011/06/23/live-search-with-knockoutjs/
-
-//https://developers.google.com/maps/documentation/javascript/markers
 
 //https://developers.google.com/maps/documentation/javascript/infowindows
 
 //http://stackoverflow.com/questions/3094032/how-to-populate-a-google-maps-infowindow-with-ajax-content
 
 var viewModel = {
-	locations: ko.observableArray(markers),
-
+	markers: ko.observableArray(markers),
 
 	query: ko.observable(''),
 
 	search: function(value){
+
+		var newMap = [];
 		
-		viewModel.locations.removeAll();
-
-		console.log(value);
-		//console.log(locations);
-		console.log(things);
-
-		for(var x in data){
-				console.log("in for loop");
-				console.log(x);
-				if(locations[x].name.toLowerCase().indexOf(value.toLowerCase())>=0){
-					//console.log(locations[x].name.toLowerCase());
-					viewModel.locations.push(locations[x]);
-				}
+		viewModel.markers([]);	
+		clearOverlays(gMarks);
+		for(var x in markers){
+			if(markers[x].name.toLowerCase().indexOf(value.toLowerCase())>=0){
+				viewModel.markers.push(markers[x]);
+				newMap.push(markers[x]);		
+				marks(newMap);
+			}
 		}
 	}
 };
 
 viewModel.query.subscribe(viewModel.search);
 
-//viewModel.query.subscribe(function(){console.log(viewModel.search);});
-
 ko.applyBindings(viewModel);
 
-
-//listview
-
-//
