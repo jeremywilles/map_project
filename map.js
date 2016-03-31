@@ -30,6 +30,7 @@ function initMap() {
 
 function marks(markers){
   for(var i = 0; i<markers.length; i++){
+  	//console.log(markers[i]);
   	var loc = markers[i];
   	var latLng = {lat: loc.lat, lng: loc.lng};
   	var marker = new google.maps.Marker({
@@ -76,6 +77,12 @@ var viewModel = {
 				marks(newMap);
 			}
 		}
+	},
+
+	pick: function(pick){
+		clearOverlays(gMarks);
+		marks([pick]);
+		viewModel.markers([pick]);
 	}
 };
 

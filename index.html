@@ -11,7 +11,7 @@
 		<div class="listView">
 			<ul data-bind="foreach: markers">
 				
-				<li data-bind="text: name"></li>
+				<li data-bind="text: name, click: $root.pick"></li>
 				
 			</ul>
 		</div>
