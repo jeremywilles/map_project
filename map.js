@@ -20,17 +20,16 @@ var markers = [
 	{name: "Epcot", lat: 28.3710, lng: -81.5500},
 	{name: "Magic Kingdom", lat: 28.4186, lng: -81.5811},
 	{name: "Hollywood Studios", lat: 28.3570, lng: -81.5561},
-	{name: "Disney Springs", lat: 28.3710, lng: -81.5180}];
+	{name: "Disney Springs", lat: 28.3710, lng: -81.5180},
+	{name: "Animal Kindom Lodge", lat: 28.3527, lng: -81.6034},
+	{name: "Disney BoardWalk Resort", lat: 28.3679, lng: -81.5553}];
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 28.386292, lng: -81.554607},
-    zoom: 13
+    zoom: 12
   });
   marks(markers);
-
-  addInfo();
-  launchInfo();
 
 }
 
@@ -44,6 +43,7 @@ function marks(markers){
   		map: map,
   		title: loc.name  		
   	});
+  	marker.addListener('click', selected);
   	gMarks.push(marker);
 	}
 }
@@ -92,13 +92,12 @@ infoWindow = new google.maps.InfoWindow({
 }
 
 
-function launchInfo(){
-
-	for(var i = 0; i<gMarks.length; i++){
-		gMarks[i].addListener('click', function(){
-			infoWindow.open(map, this);
-		});
-	}
+function selected(){
+	console.log(this);
+	addInfo();
+	this.setAnimation(google.maps.Animation.BOUNCE);
+	infoWindow.open(map, this);
+	
 }
 
 	
@@ -139,6 +138,10 @@ var viewModel = {
 		clearOverlays(gMarks);
 		marks([pick]);
 		viewModel.markers([pick]);
+		addInfo();
+		gMarks[0].setAnimation(google.maps.Animation.BOUNCE);
+		infoWindow.open(map, gMarks[0]);
+		
 	}
 };
 
