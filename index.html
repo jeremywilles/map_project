@@ -1,31 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>DisneyWorld Map View Project</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="map.css">
+	<meta charset="utf-8">
+	<script 
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDR_R0fIJ8eCx9SlRLLY5LtPuh9yTF4Oqc" async defer>
+  </script>
+	<link rel="stylesheet" href="map.css">	
 </head>
 <body>
-	<input class="searchBar" placeholder="Search..." type="search" data-bind="value: query, valueUpdate: 'keyup'"  autocomplete="off">
+	<input class="searchBar" placeholder="Search..." type="search" data-bind="textInput: query, event: {keyup: $root.search}"  autocomplete="off">
 
 	<div class="container">
+
 		<div class="listView">
+
 			<ul data-bind="foreach: markers">
-				
-				<li data-bind="text: name, click: $root.pick"></li>
-				
+
+				<li data-bind="text: name , click:$root.pick"></li>
+
 			</ul>
+
 		</div>
+
 		<div id="map"></div>
+
 	</div>
-
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
-	<script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDR_R0fIJ8eCx9SlRLLY5LtPuh9yTF4Oqc&callback=initMap">
-    </script>
-	<script type="text/javascript" src="map.js"></script>
 	
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script> 
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+  <script src="oauth-signature.min.js"></script>
+	<script src="map2.js"></script>
 </body>
 </html>
 
