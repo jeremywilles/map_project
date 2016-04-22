@@ -82,8 +82,6 @@ var mapViewModel = function(){
 	//turn on bouncing when marker is selected
 
 	var toggleBounce = function(marker){
-		console.log("in toggleBounce");
-		console.log(marker.getAnimation());
 		marker.setAnimation(google.maps.Animation.BOUNCE);
 		setTimeout(function(){
 			marker.setAnimation(null);
@@ -135,7 +133,6 @@ var mapViewModel = function(){
       success: function(results){
         // Do stuff with results
         var yelpContent = $('#content');
-        console.log(results);
         var addContent = '<h1>'+results.name+'</h1>'+
         				'<div id="image"><img src="'+results.image_url+'"></div>'+
         				'<div>Phone: '+results.display_phone+'</div>'+
