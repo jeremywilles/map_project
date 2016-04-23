@@ -32,9 +32,6 @@ var mapViewModel = function(){
  //this will run when a place from the listview is clicked on
 
 	self.pick = function(item){
-		//self.clearMap(self.gMarks);
-		//self.addMarkers([item]);
-		//self.markers([item]);
 		console.log(item);
 		console.log(self.gMarks);
 		for(var i = 0; i<self.gMarks.length; i++){
@@ -58,18 +55,11 @@ var mapViewModel = function(){
 			if(places[x].name.toLowerCase().indexOf(self.query().toLowerCase())>=0){
 				self.markers.push(places[x]);
 				newMap.push(places[x]);
-				
 			}
 		}
 		self.addMarkers(newMap);
 	};
 
-	self.clearMap = function(list){
-		for (var i = 0; i < list.length; i++ ){
-    	list[i].setMap(null);
-  	}
-  	self.gMarks = [];
-	};
 
 	//take list of places, create Map Marker objects
 
@@ -113,11 +103,7 @@ var mapViewModel = function(){
 				break;
 			}
 		}
-		
 		var contentString = '<div id="content"></div>';
-		var latLng = {lat: location.lat, lng: location.lng};
-
-		//self.infoWindow.setPosition(latLng);
 		self.infoWindow.setContent(contentString);
 		
 		self.infoWindow.open(self.googleMap, location);
