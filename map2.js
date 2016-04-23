@@ -1,4 +1,4 @@
-//readme
+'use strict';
 
 var places = [
 	{name: "Animal Kingdom", lat: 28.3580, lng: -81.5900, id: 'disneys-animal-kingdom-lake-buena-vista' },
@@ -25,16 +25,26 @@ var mapViewModel = function(){
 	self.googleMap = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 28.386292, lng: -81.554607},
     zoom: 13
-  });
+  	});
+
+  	self.infoWindow = new google.maps.InfoWindow();
 
  //this will run when a place from the listview is clicked on
 
 	self.pick = function(item){
-		self.clearMap(self.gMarks);
-		self.addMarkers([item]);
-		self.markers([item]);
-		toggleBounce(self.gMarks[0]);
-		apiCall(self.gMarks[0]);		
+		//self.clearMap(self.gMarks);
+		//self.addMarkers([item]);
+		//self.markers([item]);
+		console.log(item);
+		console.log(self.gMarks);
+		for(var i = 0; i<self.gMarks.length; i++){
+			if(item.name == self.gMarks[i].title){
+				var place = self.gMarks[i];
+				break;
+			}
+		}
+		toggleBounce(place);
+		apiCall(place);		
 	}
 
 	//searchbox functionality
@@ -48,13 +58,14 @@ var mapViewModel = function(){
 			if(places[x].name.toLowerCase().indexOf(self.query().toLowerCase())>=0){
 				self.markers.push(places[x]);
 				newMap.push(places[x]);
-				self.addMarkers(newMap);
+				
 			}
 		}
+		self.addMarkers(newMap);
 	};
 
 	self.clearMap = function(list){
-		for (var i = 0; i < list.length; i++ ) {
+		for (var i = 0; i < list.length; i++ ){
     	list[i].setMap(null);
   	}
   	self.gMarks = [];
@@ -72,6 +83,7 @@ var mapViewModel = function(){
   			title: loc.name
   		});
   	marker.addListener('click', function(){
+  		self.infoWindow.close();
   		toggleBounce(this);
   		apiCall(this);
   	});
@@ -85,7 +97,7 @@ var mapViewModel = function(){
 		marker.setAnimation(google.maps.Animation.BOUNCE);
 		setTimeout(function(){
 			marker.setAnimation(null);
-		}, 1300);		
+		}, 1300);
 	}
 
 	//API section
@@ -95,20 +107,20 @@ var mapViewModel = function(){
 	//https://github.com/bettiolo/oauth-signature-js
 
 	var apiCall = function(location){
-		console.log(location);
 		for(var i = 0; i<places.length; i++){
 			if(places[i].name == location.title){
 				var place = places[i];
+				break;
 			}
 		}
 		
 		var contentString = '<div id="content"></div>';
 		var latLng = {lat: location.lat, lng: location.lng};
-		var infoWindow = new google.maps.InfoWindow({
-			postion: latLng,
-			content: contentString
-		});
-		infoWindow.open(self.googleMap, location);
+
+		//self.infoWindow.setPosition(latLng);
+		self.infoWindow.setContent(contentString);
+		
+		self.infoWindow.open(self.googleMap, location);
 
 		var yelp_url = 'http://api.yelp.com/v2/business/' + place.id;
 
