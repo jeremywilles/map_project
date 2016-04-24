@@ -11,13 +11,17 @@ body {
 
 
 .listView {
+	position: absolute;
 	width: 15%;
 	float: left;	
-	height: 100vh;
+	height: 250px;
+	z-index: 3;
+	overflow: auto;
+	background: white;
 }
 
 #map {
-	width: 85%;
+	width: 100%;
 	float: right;
 	height: 100vh;
 }
@@ -33,38 +37,35 @@ li {
 	padding-top: 10px;
 }
 
-#content {
+.content {
 	max-width: 300px
 }
 
-
-#content h1 {
+h1 {
 	text-align: center;
 	font-size: 17px;
 }
 
-#image img {
+.yelpImage {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
 }
 
 @media (max-width: 500px) {
-	body {
-		color: black;
-	}
-
-	#map {
-		width: 100%;
-	}
 
   .listView {
-    display: none;
+  	width: 20%;
+  	height: 250px;
+  }
+
+  li{
+  	font-size: 16;
   }
 
   .searchBar {
   	height: 50px;
+  	font-size: 18;
   }
-
  
 }

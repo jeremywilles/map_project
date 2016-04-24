@@ -9,8 +9,17 @@ var places = [
 	{name: "Animal Kindom Lodge", lat: 28.3527, lng: -81.6034, id: 'disneys-animal-kingdom-lodge-orlando'},
 	{name: "Disney BoardWalk Resort", lat: 28.3679, lng: -81.5553, id: 'disneys-boardwalk-lake-buena-vista-4'}];
 
+
+function googleError() {
+    "use strict";
+    document.getElementById('map').innerHTML = "<h2>Google Maps was not able to load.</h2>";
+}
+
+
 //functional refactor influenced by Matt Prather and his example here:
 //http://codepen.io/prather-mcs/pen/KpjbNN
+
+
 
 var mapViewModel = function(){
 
@@ -32,8 +41,6 @@ var mapViewModel = function(){
  //this will run when a place from the listview is clicked on
 
 	self.pick = function(item){
-		console.log(item);
-		console.log(self.gMarks);
 		for(var i = 0; i<self.gMarks.length; i++){
 			if(item.name == self.gMarks[i].title){
 				var place = self.gMarks[i];
@@ -41,7 +48,7 @@ var mapViewModel = function(){
 			}
 		}
 		toggleBounce(place);
-		apiCall(place);		
+		apiCall(place);
 	}
 
 	//searchbox functionality
@@ -59,6 +66,12 @@ var mapViewModel = function(){
 		}
 		self.addMarkers(newMap);
 	};
+
+	self.clearMap = function(marks){
+		for(var i = 0; i<marks.length; i++){
+			marks[i].setVisible(false);
+		}
+	}
 
 
 	//take list of places, create Map Marker objects
@@ -103,7 +116,7 @@ var mapViewModel = function(){
 				break;
 			}
 		}
-		var contentString = '<div id="content"></div>';
+		var contentString = '<div class="content"></div>';
 		self.infoWindow.setContent(contentString);
 		
 		self.infoWindow.open(self.googleMap, location);
@@ -130,26 +143,36 @@ var mapViewModel = function(){
       dataType: 'jsonp',
       success: function(results){
         // Do stuff with results
-        var yelpContent = $('#content');
+        var yelpContent = $('.content');
         var addContent = '<h1>'+results.name+'</h1>'+
-        				'<div id="image"><img src="'+results.image_url+'"></div>'+
+        				'<div class="yelpImage"><img src="'+results.image_url+'"></div>'+
         				'<div>Phone: '+results.display_phone+'</div>'+
         				'<div>Rating: <img src="'+ results.rating_img_url_small+'"></div>'+
         				'<div>Review: <a href="'+results.url+'">'+results.snippet_text+'</div><br>'+
         				'<div><img src="yelp_powered_btn_light.png" alt="Powered by Yelp"></div>'
-        yelpContent.append(addContent);        
+        yelpContent.append(addContent);
+        clearTimeout(yelpTimeout);
       },
       fail: function() {
         // Do stuff on fail
-         var yelpContent = $('#content');
+         var yelpContent = $('.content');
          var addContent = '<h1>Yelp API Content<br>Failed to Load</h1>';
          yelpContent.append(addContent);
       }
     };
+    var yelpTimeout = setTimeout(function(){
+    	var yelpContent = $('.content');
+    	var addContent = '<h2>failed to get Yelp API data</h2>';
+    	yelpContent.append(addContent);
+    }, 8000)
+
     // Send AJAX query via jQuery library.
     $.ajax(settings);
 	}
 	self.addMarkers(places);
 }
 
-ko.applyBindings(new mapViewModel());
+function init(){
+
+	ko.applyBindings(new mapViewModel());
+}
